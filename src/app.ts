@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 // const morgan = require('morgan');
 // const helmet = require('helmet');
 // const cookieParser = require('cookie-parser');
@@ -17,9 +17,9 @@ const app = express();
 // app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄'
+    message: 'Here is my api 🦄🌈✨👋🌎🌍🌏✨🌈🦄',
   });
 });
 
@@ -28,4 +28,5 @@ app.get('/', (req, res) => {
 // app.use(middlewares.notFound);
 // app.use(middlewares.errorHandler);
 
-module.exports = app;
+// module.exports = app;
+export default app;
