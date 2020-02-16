@@ -1,3 +1,10 @@
+- [How to make a full stack app with Keystone.js, Typescript, ESModules, express, and react](#how-to-make-a-full-stack-app-with-keystonejs-typescript-esmodules-express-and-react)
+  - [Setting up node](#setting-up-node)
+  - [Setting up express](#setting-up-express)
+  - [Setting up linting, Typescript and Prettier with Poetic](#setting-up-linting-typescript-and-prettier-with-poetic)
+  - [Setting up tests with Jest](#setting-up-tests-with-jest)
+  - [Setting up custom keyston server](#setting-up-custom-keyston-server)
+
 # How to make a full stack app with Keystone.js, Typescript, ESModules, express, and react
 
 ## Setting up node
@@ -53,7 +60,7 @@ app.listen(port, () => {
 });
 ```
 
-## TODO Explain this
+TODO: Explain this
 
 lets create that `app.js` file
 
@@ -73,7 +80,7 @@ app.get('/', (req, res) => {
 export default app;
 ```
 
-## TODO Explain this
+TODO: Explain this
 
 in our `package.json` file lets add a start script, lets also install nodeman for easy development
 
@@ -106,7 +113,7 @@ npx poetic
 ```
 
 in tsconfig.json:
-change the module property to `commonjs` and remove `"noEmit": true`
+change the module property to `commonjs` and remove `"noEmit": true` and `"isolatedModules": true`
 
 change the extension of `app.js` and `index.js` to `.ts`
 
@@ -153,3 +160,69 @@ export default app;
 ```
 
 then check out `localhost:5001` and see the updated message
+
+## Setting up tests with Jest
+
+`npm install --save-dev jest ts-jest @types/jest`
+
+```json
+"test":"jest",
+"test:watch":"jest --watch",
+"test:coverage":"jest --coverage"
+```
+
+Lets make our first test file. Create `app.spec.ts`
+and add
+
+```js
+// This test fails because 1 !== 2
+it('Testing to see if Jest works', () => {
+  expect(1).toBe(2);
+});
+```
+
+run `npm run test:watch` and see the test fails
+
+now change make it pass by changing `expect(1).toBe(2)` to `expect(1).toBe(1)`
+
+install supertest
+`npm install supertest @types/supertest --save-dev`
+
+```js
+import supertest from 'supertest';
+// Link to your server file
+import app from './app';
+
+const request = supertest(app);
+
+it('gets the test endpoint', async (done) => {
+  const response = await request.get('/');
+
+  expect(response.status).toBe(200);
+  expect(response.body.message).toBe('Here is my api 🦄🌈✨👋🌎🌍🌏✨🌈🦄');
+  done();
+});
+```
+
+To see our test coverage, we need to update our jest.config.js file
+**jest.config.js**
+
+```js
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/src/index.ts'],
+  coverageReporters: ['json', 'lcov', 'text'],
+  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts)$',
+  moduleFileExtensions: ['ts', 'js', 'json'],
+};
+```
+
+this allows us to see how much of our code our tests cover.
+this leaves out the index.ts file because there isn't really anything there to test and anything in the node_modules
+
+running `npm run test:coverage` should show you the coverage in the console as well as create a coverage folder where you can see what lines are covered
+we will add the coverage folder to our `.gitignore`
+
+## Setting up custom keyston server

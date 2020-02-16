@@ -3,5 +3,6 @@ module.exports = {
   // Add custom rules here
   rules: {
     'import/extensions': 0,
+    'import/no-extraneous-dependencies': 0,
   },
 };

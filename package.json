@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "code:check": "npm code:lint; npm code:format --check",
     "code:clean": "npm code:lint --fix; npm code:format --write",
     "code:lint": "eslint --ext .js,.jsx,.ts,.tsx \"src/\"",
@@ -16,12 +19,17 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.2",
+    "@types/jest": "^25.1.2",
     "@types/node": "^13.7.0",
-    "express": "^4.17.1"
+    "@types/supertest": "^2.0.8",
+    "express": "^4.17.1",
+    "ts-jest": "^25.2.0"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2",
-    "poetic": "^1.4.0"
+    "poetic": "^1.4.0",
+    "supertest": "^4.0.2"
   }
 }
