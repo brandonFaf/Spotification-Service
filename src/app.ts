@@ -1,20 +1,20 @@
 import express from 'express';
-// const morgan = require('morgan');
-// const helmet = require('helmet');
-// const cookieParser = require('cookie-parser');
-// const cors = require('cors');
+import morgan from 'morgan';
+import helmet from 'helmet';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
-// const middlewares = require('./middlewares');
+import { errorHandler, notFound } from './middlewares';
 
 // const api = require('./api');
 // const auth = require('./data/auth');
 
 const app = express();
 
-// app.use(morgan('dev'));
-// app.use(helmet());
-// app.use(cookieParser('asdufhiaisudhfasdf'));
-// app.use(cors());
+app.use(morgan('dev'));
+app.use(helmet());
+app.use(cookieParser('asdufhiaisudhfasdf'));
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (_, res) => {
@@ -25,8 +25,7 @@ app.get('/', (_, res) => {
 
 // app.use('/api/v1', api);
 
-// app.use(middlewares.notFound);
-// app.use(middlewares.errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
-// module.exports = app;
 export default app;

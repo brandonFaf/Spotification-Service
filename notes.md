@@ -1,42 +1,13 @@
 - [How to make a full stack app with Keystone.js, Typescript, ESModules, express, and react](#how-to-make-a-full-stack-app-with-keystonejs-typescript-esmodules-express-and-react)
-  - [Setting up node](#setting-up-node)
   - [Setting up express](#setting-up-express)
   - [Setting up linting, Typescript and Prettier with Poetic](#setting-up-linting-typescript-and-prettier-with-poetic)
   - [Setting up tests with Jest](#setting-up-tests-with-jest)
+  - [Setting up middlewares and other tools](#setting-up-middlewares-and-other-tools)
+    - [helpful packages](#helpful-packages)
+    - [middlewares](#middlewares)
   - [Setting up custom keyston server](#setting-up-custom-keyston-server)
 
 # How to make a full stack app with Keystone.js, Typescript, ESModules, express, and react
-
-## Setting up node
-
-use `npx n` to install version 13.5.0 of node for ESModules
-
-Let's start by creating the directory and initializing a node project to get a project.json file. the -Y takes all the defaults for the node project. Then install express
-
-```bash
-mkdir spotification && cd spotification
-npm init -Y
-```
-
-now go into package.json and add:
-
-```json
-  "type": "module",
-```
-
-now instead of require:
-
-```js
-const app = require('./app');
-```
-
-we can use the import syntax, just like in our frontend projects
-
-```js
-import app from './app.js';
-```
-
-_note: we do need the .js for now since we don't have a build process (like webpack or tsc) to figure that out for us._
 
 ## Setting up express
 
@@ -224,5 +195,26 @@ this leaves out the index.ts file because there isn't really anything there to t
 
 running `npm run test:coverage` should show you the coverage in the console as well as create a coverage folder where you can see what lines are covered
 we will add the coverage folder to our `.gitignore`
+
+## Setting up middlewares and other tools
+
+### helpful packages
+
+- morgan - logging
+- helmet - Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
+- cors - useful for setting allow origin headers for hooking up to a frontend.
+
+`npm i morgan helmet cors`
+
+```js
+app.use(morgan('dev'));
+app.use(helmet());
+app.use(cors());
+```
+
+### middlewares
+
+create a file for middlewares called...you guessed it...`middleware.js`
+we are going to make an error handler and a 404 handler
 
 ## Setting up custom keyston server
