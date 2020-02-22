@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 
 import { errorHandler, notFound } from './middlewares';
 
-// const api = require('./api');
+import api from './api';
 // const auth = require('./data/auth');
 
 const app = express();
@@ -23,7 +23,7 @@ app.get('/', (_, res) => {
   });
 });
 
-// app.use('/api/v1', api);
+app.use('/api/v1', api);
 
 app.use(notFound);
 app.use(errorHandler);
