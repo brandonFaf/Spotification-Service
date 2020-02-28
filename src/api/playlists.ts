@@ -1,8 +1,10 @@
+import express from 'express';
+import getPlaylistsForUser from '../data/playlist';
+// import authenticate from '../data/authenticate';
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-use-before-define */
-// const express = require('express');
-import express from 'express';
+
 // import {
 //   getPlaylistsForUser,
 //   createPlaylist,
@@ -46,14 +48,18 @@ router.get('/', (_, res) => {
 //   await removeUserFromPlaylist(username, id).catch((e) => console.log(e));
 //   res.status(202).send('Deleted');
 // });
-
-// router.post('/:username', async (req, res) => {
-//   const { username } = req.params;
-//   const playlists = await getPlaylistsForUser(username);
-//   console.log(super_access_token);
-//   await Promise.all(playlists.map(checkPlaylist));
-//   res.json({ done: 'yup' });
-// });
+router.get('/nonAuth', async (_, res) => {
+  // const { username } = req.params;
+  // const playlists = await getPlaylistsForUser();
+  try {
+    const data = await getPlaylistsForUser();
+    res.json(data);
+  } catch (err) {
+    res.json(err);
+  }
+  // console.log(super_access_token);
+  // await Promise.all(playlists.map(checkPlaylist));
+});
 
 // router.get('/', async (req, res) => {
 //   const result = await getPlaylistFromSpotify('1xxWVYsizT20Mi1oxcrDZZ');
