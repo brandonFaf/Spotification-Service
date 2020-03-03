@@ -7,9 +7,6 @@ const authenticate = async (): Promise<void> => {
     password: "${process.env.KEYSTONE_ADMIN_PASSWORD}"
   ) {
     token
-    item{
-      name
-    }
   }
 }`;
 

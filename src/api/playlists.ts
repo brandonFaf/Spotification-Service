@@ -1,5 +1,5 @@
 import express from 'express';
-import getPlaylistsForUser from '../data/playlist';
+import { getAllPlaylists } from '../data/playlist';
 // import authenticate from '../data/authenticate';
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
@@ -17,12 +17,6 @@ import getPlaylistsForUser from '../data/playlist';
 // import { addPlaylistToUser, removePlaylistFromUser, getPlaylistIdsForUser } from '../data/user';
 
 const router = express.Router();
-
-router.get('/', (_, res) => {
-  res.json({
-    message: 'API - 👋🌎🌍🌏',
-  });
-});
 
 // router.get('/:username', async (req, res) => {
 //   const { username } = req.params;
@@ -48,23 +42,9 @@ router.get('/', (_, res) => {
 //   await removeUserFromPlaylist(username, id).catch((e) => console.log(e));
 //   res.status(202).send('Deleted');
 // });
-router.get('/nonAuth', async (_, res) => {
-  // const { username } = req.params;
-  // const playlists = await getPlaylistsForUser();
-  try {
-    const data = await getPlaylistsForUser();
-    res.json(data);
-  } catch (err) {
-    res.json(err);
-  }
-  // console.log(super_access_token);
-  // await Promise.all(playlists.map(checkPlaylist));
+router.get('/', async (_, res) => {
+  const data = await getAllPlaylists();
+  res.json(data);
 });
-
-// router.get('/', async (req, res) => {
-//   const result = await getPlaylistFromSpotify('1xxWVYsizT20Mi1oxcrDZZ');
-//   console.log(result);
-//   res.json(['😀', '😳', '🙄']);
-// });
 
 export default router;

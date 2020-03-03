@@ -8,6 +8,8 @@ import authenticate from './data/authenticate';
 global.fetch = fetchCookie(fetch);
 (async (): Promise<void> => {
   dotenv.config();
+
+  // call to authenticate with keystoneAPI Token is stored in a cookie
   await authenticate();
 
   const port = process.env.PORT || 5001;
