@@ -1,7 +1,7 @@
 import nock from 'nock';
-import { checkPlaylist, AllPlaylistsResponse, getAllPlaylists } from '../playlist';
+import PlaylistHandler, { AllPlaylistsResponse } from '../PlaylistHandler';
 
-jest.mock('../spotify.ts');
+jest.mock('../SpotifyHandler.ts');
 const playlistData: AllPlaylistsResponse = {
   allPlaylists: [
     { name: 'name', spotifyId: '1', snapshotId: 'snapshotId', id: '1' },
@@ -17,7 +17,7 @@ describe('playlists', () => {
           return body.query.includes('allPlaylists');
         })
         .reply(200, { data: playlistData });
-      const updatedPlaylist = await getAllPlaylists();
+      const updatedPlaylist = await new PlaylistHandler().getAllPlaylists();
       expect(updatedPlaylist).toEqual(playlistData.allPlaylists);
       expect(scope.isDone()).toBe(true);
       done();
@@ -25,10 +25,11 @@ describe('playlists', () => {
   });
   describe('find playlist difference logic', () => {
     it('checks if the snapshotId is the same', async (done) => {
-      const isTheSame = await checkPlaylist(playlistData.allPlaylists[0]);
+      const pc = new PlaylistHandler();
+      const isTheSame = await pc.checkPlaylist(playlistData.allPlaylists[0]);
       expect(isTheSame).toBe(true);
 
-      const isTheSame2 = await checkPlaylist(playlistData.allPlaylists[1]);
+      const isTheSame2 = await pc.checkPlaylist(playlistData.allPlaylists[1]);
       expect(isTheSame2).toBe(false);
       done();
     });

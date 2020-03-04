@@ -1,13 +1,13 @@
 import { SpotifyPlaylist } from '../types';
 import client from '../helper/graphQLClient';
 
-export interface ISpotifyCaller {
+export interface ISpotifyHandler {
   getPlaylistFromSpotify: (playlistId: string) => Promise<SpotifyPlaylist>;
 }
 type GetPlaylistFromSpotifyResponse = {
   getPlaylistFromSpotify: SpotifyPlaylist;
 };
-class SpotifyCaller implements ISpotifyCaller {
+class SpotifyHandler implements ISpotifyHandler {
   public getPlaylistFromSpotify = async (playlistId: string): Promise<SpotifyPlaylist> => {
     const query = `query getPlaylistInfo($playlistId:ID){
       getPlaylistFromSpotify(id:$playlistId){
@@ -32,4 +32,4 @@ class SpotifyCaller implements ISpotifyCaller {
     return data;
   };
 }
-export default SpotifyCaller;
+export default SpotifyHandler;

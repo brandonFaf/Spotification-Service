@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { SpotifyPlaylist } from '../../types/index';
-import SpotifyCaller from '../spotify';
+import SpotifyHandler from '../SpotifyHandler';
 
 const playlistData: SpotifyPlaylist[] = [
   { name: 'name', snapshotId: 'snapshotId', id: '1' },
@@ -15,7 +15,7 @@ describe('spotify', () => {
           return body.variables.playlistId === '1';
         })
         .reply(200, { data: { getPlaylistFromSpotify: playlistData[0] } });
-      const plist = await new SpotifyCaller().getPlaylistFromSpotify(playlistData[0].id);
+      const plist = await new SpotifyHandler().getPlaylistFromSpotify(playlistData[0].id);
       expect(plist).toEqual(playlistData[0]);
       expect(scope.isDone()).toBe(true);
       done();

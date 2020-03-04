@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllPlaylists } from '../data/playlist';
+import PlaylistHandler from '../data/PlaylistHandler';
 // import authenticate from '../data/authenticate';
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
@@ -43,7 +43,7 @@ const router = express.Router();
 //   res.status(202).send('Deleted');
 // });
 router.get('/', async (_, res) => {
-  const data = await getAllPlaylists();
+  const data = await new PlaylistHandler().getAllPlaylists();
   res.json(data);
 });
 

@@ -1,4 +1,4 @@
-import { ISpotifyCaller } from '../spotify';
+import { ISpotifyHandler } from '../SpotifyHandler';
 import { SpotifyPlaylist } from '../../types';
 
 const playlistData: SpotifyPlaylist[] = [
@@ -13,7 +13,7 @@ const playlistData: SpotifyPlaylist[] = [
     snapshotId: 'snapshotId',
   },
 ];
-class MockSpotifyCaller implements ISpotifyCaller {
+class MockSpotifyHandler implements ISpotifyHandler {
   getPlaylistFromSpotify = (playlistId: string): Promise<SpotifyPlaylist> => {
     return new Promise<SpotifyPlaylist>((resolve) => {
       process.nextTick(() => {
@@ -22,4 +22,4 @@ class MockSpotifyCaller implements ISpotifyCaller {
     });
   };
 }
-export default MockSpotifyCaller;
+export default MockSpotifyHandler;
