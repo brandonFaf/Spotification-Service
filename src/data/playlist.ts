@@ -1,7 +1,7 @@
 import { Playlist } from '../types/index';
 import client from '../helper/graphQLClient';
 
-import getPlaylistFromSpotify from './spotify';
+import SpotifyCaller from './spotify';
 
 export interface AllPlaylistsResponse {
   allPlaylists: Playlist[];
@@ -23,9 +23,10 @@ export const getAllPlaylists = async (): Promise<Playlist[]> => {
   const { allPlaylists } = await client.request<AllPlaylistsResponse>(query);
   return allPlaylists;
 };
-export const checkPlaylist = async (playlist: Playlist): Promise<void> => {
-  const updatedPlaylist = await getPlaylistFromSpotify(playlist.spotifyId);
+export const checkPlaylist = async (playlist: Playlist): Promise<boolean> => {
+  const updatedPlaylist = await new SpotifyCaller().getPlaylistFromSpotify(playlist.spotifyId);
   if (updatedPlaylist.snapshotId !== playlist.snapshotId) {
+    return false;
     // const newTracks = getNewTracks(playlist.trackInfo, updatedTracks.data.items);
     // console.log('newTracks:', newTracks);
     // if (newTracks && newTracks.length > 0) {
@@ -39,6 +40,7 @@ export const checkPlaylist = async (playlist: Playlist): Promise<void> => {
     //   console.log('problem updating DB: ', e);
     // });
   }
+  return true;
 };
 // const diffPlaylists = (old, current) => {
 //   const newTracks = current.filter((t) => !old.find((o) => o.track.id === t.track.id));

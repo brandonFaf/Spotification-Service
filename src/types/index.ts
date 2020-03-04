@@ -514,7 +514,7 @@ export type SpotifyPlaylist = {
   collaborative?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
   href?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
   snapshotId?: Maybe<Scalars['String']>;
